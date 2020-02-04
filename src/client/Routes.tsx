@@ -1,17 +1,16 @@
 import React from 'react';
-import Home from './components/Home';
-import QuestionsList, { loadData } from "./components/questionsList";
+import HomePage from './pages/HomePage';
+import QuestionsListPage from "./pages/QuestionsListPage";
 
 // use react-router-config for SSA rendering
 export default [
     {
         path: '/',
-        component: Home,
+        ...HomePage,
         exact: true
     },
     {
-        loadData,
         path: '/questions',
-        component: QuestionsList,
+        ...QuestionsListPage,
     }
 ];

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { AnyAction, Store} from "redux";
+import { Store} from "redux";
 
 import { fetchQuestions } from "../actions";
 
@@ -9,8 +9,13 @@ type QList = {
     fetchQuestions: any
 }
 
-class QuestionsList extends Component<QList, {}> {
+class QuestionsListPage extends Component<QList, {}> {
     componentDidMount(): void {
+        // although this data is fetched on the server side
+        // and passed to the store; this request stays here
+        // as the user may navigate in single page app from
+        // a different route where this data wouldn't be fed
+        // from the server
         this.props.fetchQuestions();
     }
 
@@ -46,8 +51,9 @@ const loadData = (store: Store) => {
     return store.dispatch<any>(fetchQuestions());
 };
 
-export { loadData }
-
-export default connect(
-    mapStateToProps, { fetchQuestions }
-)(QuestionsList)
+export default {
+    loadData,
+    component: connect(
+        mapStateToProps, { fetchQuestions }
+        )(QuestionsListPage)
+}
