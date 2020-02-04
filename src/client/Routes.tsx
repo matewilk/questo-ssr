@@ -1,13 +1,17 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
 import Home from './components/Home';
-import QuestionsList from "./components/questionsList";
+import QuestionsList, { loadData } from "./components/questionsList";
 
-export default () => {
-    return (
-        <div>
-            <Route exact path="/" component={Home} />
-            <Route path="/questions" component={QuestionsList} />
-        </div>
-    )
-}
+// use react-router-config for SSA rendering
+export default [
+    {
+        path: '/',
+        component: Home,
+        exact: true
+    },
+    {
+        loadData,
+        path: '/questions',
+        component: QuestionsList,
+    }
+];
