@@ -1,10 +1,17 @@
-import axios from 'axios';
-import {Action, AnyAction, Dispatch} from "redux";
+import { Dispatch } from "redux";
+import { AxiosInstance } from 'axios'
 
 export const FETCH_QUESTIONS = 'fetch_questions';
-export const fetchQuestions = () => async (dispatch:Dispatch): Promise<void> => {
-    const res = await axios.post(
-        'http://localhost:4000',
+export const fetchQuestions = () => async (
+    dispatch:Dispatch, getState: Function, api: AxiosInstance
+): Promise<void> =>
+    {
+    // TODO: change to fetch (what about server side?)
+    const res = await api.post(
+        // no path needed as it is set for both
+        // server and front when setting up
+        // axiosInstance with appropriate url param
+        '',
         {
             query: `
                 query ($cursor: String, $limit: Int) {
