@@ -1,10 +1,11 @@
 const path = require('path');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const webpackNodeExternals = require('webpack-node-externals');
 
 const commonConfig = require('./webpack.common');
 
 const config = {
+	devtool: 'source-map',
 	target: 'node',
 	entry: [
 		'@babel/polyfill',

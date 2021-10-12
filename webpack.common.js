@@ -24,26 +24,9 @@ module.exports = {
 				use: [
 					{
 						options: {
-							useTranspileModule: true,
-							forceIsolatedModules: true,
-							// useCache: true,
-							useBabel: true,
-							babelOptions: {
-								babelrc: false /* Important line */,
-								presets: [
-									[
-										'edge',
-										{
-											transpile: 'modern',
-											modules: 'false'
-										}
-									]
-								]
-							},
-							reportFiles: ['src/**/*.{ts,tsx}'],
-							babelCore: '@babel/core'
+							reportFiles: ['src/**/*.{ts,tsx}']
 						},
-						loader: 'awesome-typescript-loader'
+						loader: 'ts-loader'
 					}
 				],
 				include: [path.resolve(__dirname, 'src')]
