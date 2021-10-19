@@ -48,20 +48,14 @@ export const fetchCurrentUser =
   () => async (dispatch: Dispatch, getState: Function, api: AxiosInstance) => {
     const res = await api.post("", {
       query: `
-        query ($ID: ID!) {
-          user(ID: $ID) {
+        query {
+          currentUser {
             ID
-            RecordType
             name
-            score
             type
-            date
           }
         }
-    `,
-      variables: {
-        ID: "",
-      },
+      `,
     });
 
     dispatch({
