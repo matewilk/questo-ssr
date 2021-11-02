@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import express, { Request, Response } from "express";
 import { matchRoutes } from "react-router-config";
 import proxy from "http-proxy-middleware";
