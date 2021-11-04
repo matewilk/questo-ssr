@@ -9,7 +9,11 @@
     "noImplicitAny": true,
     "pretty": true,
     "skipLibCheck": true,
-    "jsx": "react"
+    "jsx": "react",
+    "baseUrl": "src",
+    "paths": {
+      "test-utils": ["./client/utils/test-utils"]
+    }
   },
   "include": [
     "./src/**/*"

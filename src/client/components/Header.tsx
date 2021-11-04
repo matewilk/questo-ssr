@@ -2,20 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-const Header = ({ auth }: { auth: any }) => {
-  const authButton = auth ? (
-    <a href="/api/logout">Logout</a>
-  ) : (
-    <a href="/api/login">Login</a>
-  );
+import LoginButton from "./LoginButton";
 
+const Header = ({ auth }: { auth: any }) => {
   return (
     <div>
       <Link to="/">Questo</Link>
       <div>
         <Link to="/questions">Questions</Link>
-        <Link to="/users">Users</Link>
-        {authButton}
+        {auth ? <Link to="/users">Users</Link> : ""}
+        <LoginButton />
       </div>
     </div>
   );
