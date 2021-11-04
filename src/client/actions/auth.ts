@@ -28,7 +28,7 @@ export const loginUser =
   async (dispatch: Dispatch, getState: Function, api: AxiosInstance) => {
     const res = await api.post("", {
       query: `
-        mutation ($name: String!, $password: String!) {
+        mutation Login($name: String!, $password: String!) {
           login(name: $name, password: $password) {
             ID
             name

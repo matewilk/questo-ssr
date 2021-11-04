@@ -1,13 +1,14 @@
 import React from "react";
 import { render, fireEvent, waitFor, screen } from "test-utils";
-import { rest } from "msw";
+import { graphql } from "msw";
 import { setupServer } from "msw/node";
 
-import LoginPage from "../pages/LoginPage";
+import LoginPage from "./LoginPage";
+import Header from "../components/Header";
 
 const server = setupServer(
-  rest.post("/login", (req, res, ctx) => {
-    return res(ctx.json({ data: { data: { login: true } } }));
+  graphql.mutation("Login", (req, res, ctx) => {
+    return res(ctx.data({ login: true }));
   })
 );
 
@@ -16,9 +17,9 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 test("displays different page links after login", async () => {
-  render(<LoginPage.component />);
+  render(<><Header/><LoginPage.component /></>);
 
-  fireEvent.click(screen.getByText("Login"));
+  fireEvent.click(screen.getByText("Submit"));
 
   await waitFor(() => screen.getByText("Logout"));
 

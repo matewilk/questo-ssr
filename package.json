@@ -8,7 +8,7 @@
     "dev:server": "nodemon --watch build --exec \"node --inspect=localhost:9228 build/bundle.js\"",
     "dev:build-server": "webpack --config webpack.server.js --watch",
     "dev:build-client": "webpack --config webpack.client.js --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [
     "react",

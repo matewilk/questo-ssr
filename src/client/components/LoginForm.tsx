@@ -35,7 +35,7 @@ const LoginForm = ({ login }: { login: Function }) => {
         placeholder="password ..."
         required
       />
-      <button>Login</button>
+      <button>Submit</button>
     </form>
   );
 };
