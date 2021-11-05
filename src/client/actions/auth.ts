@@ -6,7 +6,7 @@ export const fetchCurrentUser =
   () => async (dispatch: Dispatch, getState: Function, api: AxiosInstance) => {
     const res = await api.post("", {
       query: `
-        query {
+        query CurrentUser {
           currentUser {
             ID
             name
@@ -28,7 +28,7 @@ export const loginUser =
   async (dispatch: Dispatch, getState: Function, api: AxiosInstance) => {
     const res = await api.post("", {
       query: `
-        mutation Login($name: String!, $password: String!) {
+        mutation Login ($name: String!, $password: String!) {
           login(name: $name, password: $password) {
             ID
             name
@@ -50,7 +50,7 @@ export const logout =
   () => async (dispatch: Dispatch, getState: Function, api: AxiosInstance) => {
     const res = await api.post("", {
       query: `
-        query {
+        query Logout {
           logout {
             success
           }

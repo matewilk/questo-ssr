@@ -6,23 +6,27 @@ import createStore from "../../helpers/createStore";
 import { Request } from "express";
 
 // @ts-ignore
-const AllTheProviders: FC = ({ children }) => {
-  const req = {
-    get: function () {},
-  } as unknown as Request;
-  const store = createStore(req);
-  // place all your app providers here
-  return (
-    <Provider store={store}>
-      <StaticRouter>{children}</StaticRouter>
-    </Provider>
-  );
-};
+const AllTheProviders =
+  (path: string): FC =>
+  ({ children }) => {
+    const req = {
+      get: function () {},
+      path,
+    } as unknown as Request;
+    const store = createStore(req);
+    // place all your app providers here
+    return (
+      <Provider store={store}>
+        <StaticRouter location={req.path}>{children}</StaticRouter>
+      </Provider>
+    );
+  };
 
 const customRender = (
   ui: ReactElement,
+  path: string,
   options?: Omit<RenderOptions, "wrapper">
-) => render(ui, { wrapper: AllTheProviders, ...options });
+) => render(ui, { wrapper: AllTheProviders(path), ...options });
 
 export * from "@testing-library/react";
 export { customRender as render };
