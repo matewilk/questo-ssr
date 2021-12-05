@@ -124,7 +124,6 @@ workflows:
             equal: [master, << pipeline.git.branch >>]
     jobs:
       - generate-aws-credentails:
-          tf-dir: tf/app
           context: questo-dev-context
       - terraform-plan:
           tf-dir: tf/app
