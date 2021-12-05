@@ -8,8 +8,7 @@ import renderer from "./helpers/renderer";
 
 const app = express();
 
-// TODO: change localhost to env variable
-app.use("/api", proxy({ target: "http://localhost:4000" }));
+app.use("/api", proxy({ target: process.env.QUESTO_API_URL }));
 
 app.use(express.static("public"));
 

@@ -1,0 +1,3 @@
+bucket="questo-infra"
+key="tfstate/dev/questo-ssr/app.tfstate"
+region="eu-west-2"
