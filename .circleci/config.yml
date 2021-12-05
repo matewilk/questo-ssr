@@ -77,7 +77,7 @@ jobs:
       - image: cimg/node:16.10
     steps:
       - checkout
-      - node/install-packkages:
+      - node/install-packages:
           pkg-manager: npm
       - persist_to_workspace:
           root: .
