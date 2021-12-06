@@ -25,7 +25,7 @@ resource "kubernetes_config_map" "questo-ssr-configmap" {
   }
 }
 
-resource "kubernetes_deployment" "questo-ssr-app-deployment" {
+resource "kubernetes_deployment" "questo-ssr" {
   metadata {
     name = "questo-ssr-app-deployment-${var.env}"
     labels = {
@@ -76,7 +76,7 @@ resource "kubernetes_service" "questo-ssr-service" {
   }
   spec {
     selector = {
-      "app.kubernetes.io/name" = lookup(kubernetes_deployment.questo-ssr-app-deployment.metadata.0.labels, "app.kubernetes.io/name")
+      "app.kubernetes.io/name" = lookup(kubernetes_deployment.questo-ssr.metadata.0.labels, "app.kubernetes.io/name")
     }
 
     port {
@@ -88,9 +88,9 @@ resource "kubernetes_service" "questo-ssr-service" {
   }
 }
 
-output "node_port" {
-  value = kubernetes_service.questo-ssr-service.spec[0].port.0.node_port
-}
+#output "node_port" {
+#  value = kubernetes_service.questo-ssr-service
+#}
 
 resource "kubernetes_ingress" "questo-ssr-ingress" {
   wait_for_load_balancer = true
@@ -98,7 +98,7 @@ resource "kubernetes_ingress" "questo-ssr-ingress" {
     name      = "questo-ssr-ingress-${var.env}"
     namespace = data.kubernetes_namespace.questo-ssr-namespace.metadata.0.name
     annotations = {
-      "alb.ingress.kubernetes.io/load-balancer-name" = "questo-server-alb-${var.env}"
+      "alb.ingress.kubernetes.io/load-balancer-name" = "questo-ssr-alb-${var.env}"
       "kubernetes.io/ingress.class"                  = "alb"
       "alb.ingress.kubernetes.io/target-type"        = "ip"
       "alb.ingress.kubernetes.io/scheme"             = "internet-facing"
@@ -152,13 +152,9 @@ resource "kubernetes_ingress" "questo-ssr-ingress" {
 #  }
 #}
 #
-#output "deployment" {
-#  value = kubernetes_deployment.questo-ssr-app-deployment
-#}
-#
 #resource "aws_alb_target_group_attachment" "questo-ssr-tg-attachment" {
 #  target_group_arn = aws_alb_target_group.questo-ssr-target-group.arn
-#  target_id        = kubernetes_deployment.questo-ssr-app-deployment.metadata.0.uid
+#  target_id        = kubernetes_service.questo-ssr-service.connection.0.ip
 #}
 #
 #resource "aws_alb_listener_rule" "questo-ssr-listener-rule" {
