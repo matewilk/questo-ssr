@@ -98,8 +98,10 @@ resource "kubernetes_ingress" "questo-ssr-ingress" {
     name      = "questo-ssr-ingress-${var.env}"
     namespace = data.kubernetes_namespace.questo-ssr-namespace.metadata.0.name
     annotations = {
-      "alb.ingress.kubernetes.io/load-balancer-name" = "questo-ssr-alb-${var.env}"
       "kubernetes.io/ingress.class"                  = "alb"
+      "alb.ingress.kubernetes.io/load-balancer-name" = "questo-alb-${var.env}"
+      "alb.ingress.kubernetes.io/group.name"         = "questo-${var.env}"
+      "alb.ingress.kubernetes.io/group.order"        = "1000"
       "alb.ingress.kubernetes.io/target-type"        = "ip"
       "alb.ingress.kubernetes.io/scheme"             = "internet-facing"
       "alb.ingress.kubernetes.io/listen-ports"       = "[{\"HTTP\": 80}]"
