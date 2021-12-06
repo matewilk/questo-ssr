@@ -92,10 +92,10 @@ output "node_port" {
   value = kubernetes_service.questo-ssr-service.spec[0].port.0.node_port
 }
 
-resource "kubernetes_ingress" "questo-server-ingress" {
+resource "kubernetes_ingress" "questo-ssr-ingress" {
   wait_for_load_balancer = true
   metadata {
-    name      = "questo-server-ingress-${var.env}"
+    name      = "questo-ssr-ingress-${var.env}"
     namespace = data.kubernetes_namespace.questo-ssr-namespace.metadata.0.name
     annotations = {
       "alb.ingress.kubernetes.io/load-balancer-name" = "questo-server-alb-${var.env}"
