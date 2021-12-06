@@ -92,52 +92,87 @@ output "node_port" {
   value = kubernetes_service.questo-ssr-service.spec[0].port.0.node_port
 }
 
-resource "aws_alb_listener" "questo-ssr-listener" {
-  load_balancer_arn = data.aws_alb.alb.arn
-  port = 80
-  protocol = "HTTP"
+resource "kubernetes_ingress" "questo-server-ingress" {
+  wait_for_load_balancer = true
+  metadata {
+    name      = "questo-server-ingress-${var.env}"
+    namespace = data.kubernetes_namespace.questo-ssr-namespace.metadata.0.name
+    annotations = {
+      "alb.ingress.kubernetes.io/load-balancer-name" = "questo-server-alb-${var.env}"
+      "kubernetes.io/ingress.class"                  = "alb"
+      "alb.ingress.kubernetes.io/target-type"        = "ip"
+      "alb.ingress.kubernetes.io/scheme"             = "internet-facing"
+      "alb.ingress.kubernetes.io/listen-ports"       = "[{\"HTTP\": 80}]"
+      "alb.ingress.kubernetes.io/healthcheck-path"   = "/health"
+      "alb.ingress.kubernetes.io/healthcheck-port"   = "traffic-port"
+    }
+  }
 
-  default_action {
-    type = "fixed-response"
-
-    fixed_response {
-      content_type = "text/plain"
-      status_code = "404"
+  spec {
+    rule {
+      http {
+        path {
+          path = "/*"
+          backend {
+            service_name = kubernetes_service.questo-ssr-service.metadata.0.name
+            service_port = 80
+          }
+        }
+      }
     }
   }
 }
 
-resource "aws_alb_target_group" "questo-ssr-target-group" {
-  name = "questo-ssr-target-group-${var.env}"
-  port = 80
-  protocol = "HTTP"
-  vpc_id = data.aws_vpc.vpc.id
-  target_type = "ip"
-
-  health_check {
-    enabled = true
-    path = "/health"
-    port = "80"
-  }
-}
-
-resource "aws_alb_target_group_attachment" "questo-ssr-tg-attachment" {
-  target_group_arn = aws_alb_target_group.questo-ssr-target-group.arn
-  target_id        = data.aws_alb.alb.arn
-}
-
-resource "aws_alb_listener_rule" "questo-ssr-listener-rule" {
-  listener_arn = aws_alb_listener.questo-ssr-listener.arn
-  priority = 99
-
-  action {
-    type = "forward"
-    target_group_arn = aws_alb_target_group.questo-ssr-target-group.arn
-  }
-
-  condition {
-    path_pattern {
-      values = ["/*"]
-    }
-  }
-}
+#resource "aws_alb_listener" "questo-ssr-listener" {
+#  load_balancer_arn = data.aws_alb.alb.arn
+#  port = 80
+#  protocol = "HTTP"
+#
+#  default_action {
+#    type = "fixed-response"
+#
+#    fixed_response {
+#      content_type = "text/plain"
+#      status_code = "404"
+#    }
+#  }
+#}
+#
+#resource "aws_alb_target_group" "questo-ssr-target-group" {
+#  name = "questo-ssr-target-group-${var.env}"
+#  port = 80
+#  protocol = "HTTP"
+#  vpc_id = data.aws_vpc.vpc.id
+#  target_type = "ip"
+#
+#  health_check {
+#    enabled = true
+#    path = "/health"
+#    port = "80"
+#  }
+#}
+#
+#output "deployment" {
+#  value = kubernetes_deployment.questo-ssr-app-deployment
+#}
+#
+#resource "aws_alb_target_group_attachment" "questo-ssr-tg-attachment" {
+#  target_group_arn = aws_alb_target_group.questo-ssr-target-group.arn
+#  target_id        = kubernetes_deployment.questo-ssr-app-deployment.metadata.0.uid
+#}
+#
+#resource "aws_alb_listener_rule" "questo-ssr-listener-rule" {
+#  listener_arn = aws_alb_listener.questo-ssr-listener.arn
+#  priority = 99
+#
+#  action {
+#    type = "forward"
+#    target_group_arn = aws_alb_target_group.questo-ssr-target-group.arn
+#  }
+#
+#  condition {
+#    path_pattern {
+#      values = ["/*"]
+#    }
+#  }
+#}
