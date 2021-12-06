@@ -93,7 +93,7 @@ resource "kubernetes_service" "questo-ssr-service" {
 #}
 
 resource "kubernetes_ingress" "questo-ssr-ingress" {
-  wait_for_load_balancer = true
+  wait_for_load_balancer = false
   metadata {
     name      = "questo-ssr-ingress-${var.env}"
     namespace = data.kubernetes_namespace.questo-ssr-namespace.metadata.0.name
