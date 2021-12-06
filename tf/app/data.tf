@@ -26,6 +26,10 @@ data "aws_eks_cluster_auth" "cluster" {
   name = data.terraform_remote_state.cluster.outputs.cluster_name
 }
 
-output "cluster_id" {
-  value = data.aws_eks_cluster.cluster
+data "aws_alb" "alb" {
+  name = data.terraform_remote_state.questo-server.outputs.load_balancer_name
+}
+
+data "aws_vpc" "vpc" {
+  id = data.terraform_remote_state.cluster.outputs.vpc_id
 }

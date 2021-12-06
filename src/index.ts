@@ -12,6 +12,11 @@ app.use("/api", proxy({ target: process.env.QUESTO_API_URL }));
 
 app.use(express.static("public"));
 
+// healthcheck for k8s/eks/aws/target group
+app.get("/health", (req, res) => {
+  res.status(200).send("service is healthy");
+});
+
 app.get("*", (req: Request, res: Response) => {
   // pass request to the server side store
   // to pass the cookie (for auth purposes)
