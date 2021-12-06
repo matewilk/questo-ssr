@@ -121,6 +121,11 @@ resource "aws_alb_target_group" "questo-ssr-target-group" {
   }
 }
 
+resource "aws_alb_target_group_attachment" "questo-ssr-tg-attachment" {
+  target_group_arn = aws_alb_target_group.questo-ssr-target-group.arn
+  target_id        = data.aws_alb.alb.arn
+}
+
 resource "aws_alb_listener_rule" "questo-ssr-listener-rule" {
   listener_arn = aws_alb_listener.questo-ssr-listener.arn
   priority = 99
