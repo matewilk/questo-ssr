@@ -9,6 +9,10 @@
     "dev:build-server": "webpack --config webpack.server.js --watch",
     "dev:build-client": "webpack --config webpack.client.js --watch",
     "test": "jest",
+    "start": "npm-run-all -p start:* -s run:server",
+    "run:server": "nodemon --watch build --exec \"node --inspect=localhost:9228 build/bundle.js\"",
+    "start:build-server": "webpack --config webpack.server.js",
+    "start:build-client": "webpack --config webpack.client.js",
     "docker:dev:start": "docker-compose -f docker-compose.dev.yml up",
     "docker:dev:stop": "docker-compose -f docker-compose.dev.yml down"
   },
