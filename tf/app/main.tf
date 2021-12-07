@@ -99,7 +99,7 @@ resource "kubernetes_ingress" "questo-ssr-ingress" {
     namespace = data.kubernetes_namespace.questo-ssr-namespace.metadata.0.name
     annotations = {
       "kubernetes.io/ingress.class"                  = "alb"
-      "alb.ingress.kubernetes.io/load-balancer-name" = "questo-server-alb-${var.env}"
+      "alb.ingress.kubernetes.io/load-balancer-name" = "questo-alb-${var.env}"
       "alb.ingress.kubernetes.io/group.name"         = "questo-${var.env}"
       "alb.ingress.kubernetes.io/group.order"        = "1000"
       "alb.ingress.kubernetes.io/target-type"        = "ip"
