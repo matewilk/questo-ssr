@@ -114,7 +114,7 @@ resource "kubernetes_ingress" "questo-ssr-ingress" {
     rule {
       http {
         path {
-          path = "/front"
+          path = "/*"
           backend {
             service_name = kubernetes_service.questo-ssr-service.metadata.0.name
             service_port = 80
