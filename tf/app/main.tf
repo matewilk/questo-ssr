@@ -95,11 +95,11 @@ resource "kubernetes_service" "questo-ssr-service" {
 resource "kubernetes_ingress" "questo-ssr-ingress" {
   wait_for_load_balancer = true
   metadata {
-    name      = "questo-ssr-ingress-${var.env}"
+    name      = "questo-server-ingress-${var.env}"
     namespace = data.kubernetes_namespace.questo-ssr-namespace.metadata.0.name
     annotations = {
       "kubernetes.io/ingress.class"                  = "alb"
-      "alb.ingress.kubernetes.io/load-balancer-name" = "questo-ssr-alb-${var.env}"
+      "alb.ingress.kubernetes.io/load-balancer-name" = "questo-server-alb-${var.env}"
       "alb.ingress.kubernetes.io/group.name"         = "questo-${var.env}"
       "alb.ingress.kubernetes.io/group.order"        = "1000"
       "alb.ingress.kubernetes.io/target-type"        = "ip"
@@ -114,7 +114,7 @@ resource "kubernetes_ingress" "questo-ssr-ingress" {
     rule {
       http {
         path {
-          path = "/*"
+          path = "/front"
           backend {
             service_name = kubernetes_service.questo-ssr-service.metadata.0.name
             service_port = 80
