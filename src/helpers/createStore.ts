@@ -7,8 +7,7 @@ import reducers from "../client/reducers";
 
 export default (req: Request) => {
   const axiosInstance = axios.create({
-    // TODO: change to env variable
-    baseURL: "http://localhost:4000",
+    baseURL: process.env.QUESTO_API_URL,
     headers: {
       // trick the api with a cookie (based auth)
       // so that it (the api) thinks the request
