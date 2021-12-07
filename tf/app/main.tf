@@ -80,7 +80,7 @@ resource "kubernetes_service" "questo-ssr-service" {
     }
 
     port {
-      port        = 3000
+      port        = 80
       target_port = 3000
     }
 
