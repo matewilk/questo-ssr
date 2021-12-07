@@ -21,7 +21,7 @@ resource "kubernetes_config_map" "questo-ssr-configmap" {
   }
 
   data = {
-    QUESTO_API_URL = data.terraform_remote_state.questo-server.outputs.load_balancer_hostname
+    QUESTO_API_URL = "${data.terraform_remote_state.questo-server.outputs.load_balancer_hostname}/api"
   }
 }
 
