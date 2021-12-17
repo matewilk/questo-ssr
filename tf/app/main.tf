@@ -21,7 +21,7 @@ resource "kubernetes_config_map" "questo-ssr-configmap" {
   }
 
   data = {
-    QUESTO_API_URL = data.terraform_remote_state.questo-server.outputs.load_balancer_hostname
+    QUESTO_API_URL = data.terraform_remote_state.questo-server.outputs.questo_api_url
   }
 }
 
@@ -95,14 +95,15 @@ resource "kubernetes_ingress" "questo-ssr-ingress" {
     namespace = data.kubernetes_namespace.questo-ssr-namespace.metadata.0.name
     annotations = {
       "kubernetes.io/ingress.class"                  = "alb"
-      "alb.ingress.kubernetes.io/load-balancer-name" = "questo-alb-${var.env}"
+      "alb.ingress.kubernetes.io/load-balancer-name" = data.terraform_remote_state.questo-server.outputs.load_balancer_name
       "alb.ingress.kubernetes.io/group.name"         = "questo-${var.env}"
       "alb.ingress.kubernetes.io/group.order"        = "1000"
       "alb.ingress.kubernetes.io/target-type"        = "ip"
       "alb.ingress.kubernetes.io/scheme"             = "internet-facing"
-      "alb.ingress.kubernetes.io/listen-ports"       = "[{\"HTTP\": 80}]"
+      "alb.ingress.kubernetes.io/listen-ports"       = "[{\"HTTPS\": 443}, {\"HTTP\": 80}]"
       "alb.ingress.kubernetes.io/healthcheck-path"   = "/health"
       "alb.ingress.kubernetes.io/healthcheck-port"   = "traffic-port"
+      "alb.ingress.kubernetes.io/certificate-arn"    = data.terraform_remote_state.questo-server.outputs.questo_acm_certificate_arn
     }
   }
 
