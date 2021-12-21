@@ -16,7 +16,9 @@ app.use("/api", createProxyMiddleware({ target: process.env.QUESTO_API_URL }));
 //   createProxyMiddleware({ target: process.env.QUESTO_API_WS_URL, ws: true })
 // );
 
-app.use(express.static("public"));
+// "/static" is needed so that React Router
+// can resolve paths with params (e.g. /xxx/:id) properly
+app.use("/static", express.static("public"));
 
 // healthcheck for k8s/eks/aws/target group
 app.get("/health", (req, res) => {

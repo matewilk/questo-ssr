@@ -1,12 +1,14 @@
 import React from "react";
 import { gql, SubscriptionOptions } from "@apollo/client";
 import { useDispatch, connect } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import { updateChat } from "../actions";
 import { useSubscription } from "../hooks/useSubscription";
 
-const GamePage = ({ chat, chatId }: { chat: any[]; chatId: string }) => {
+const GamePage = ({ chat }: { chat: any[] }) => {
   const dispatch = useDispatch();
+  const { id } = useParams();
 
   const CHAT_SUBSCRIPTION = gql`
     subscription Subscription($id: String) {
@@ -18,7 +20,7 @@ const GamePage = ({ chat, chatId }: { chat: any[]; chatId: string }) => {
 
   const chatSubscription: SubscriptionOptions = {
     query: CHAT_SUBSCRIPTION,
-    variables: { id: chatId },
+    variables: { id: id },
   };
 
   const observer = {
@@ -32,6 +34,7 @@ const GamePage = ({ chat, chatId }: { chat: any[]; chatId: string }) => {
 
   return (
     <>
+      <div>Game Page</div>
       {chat.map((message, index) => (
         <div key={index}>{message}</div>
       ))}

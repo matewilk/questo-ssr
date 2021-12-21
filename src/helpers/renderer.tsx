@@ -31,7 +31,7 @@ export default (req: Request, store: Store) => {
         <script>
           window.INITIAL_STATE = ${serialize(store.getState())}
         </script>
-        <script src="bundle.js"></script>
+        <script src="/static/bundle.js"></script>
       </body>
     </html>
   `;
