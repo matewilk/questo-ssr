@@ -1,5 +1,4 @@
 // Client side app starting point
-
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
@@ -8,7 +7,9 @@ import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 import { renderRoutes } from "react-router-config";
 import axios from "axios";
+import { ApolloProvider } from "@apollo/client";
 
+import { apolloClient } from "../helpers/webSocketClient";
 import Routes from "./Routes";
 import reducers from "./reducers";
 
@@ -31,10 +32,12 @@ const store = createStore(
 );
 
 ReactDOM.hydrate(
-  <Provider store={store}>
-    <BrowserRouter>
-      <div>{renderRoutes(Routes)}</div>
-    </BrowserRouter>
-  </Provider>,
+  <ApolloProvider client={apolloClient(true)}>
+    <Provider store={store}>
+      <BrowserRouter>
+        <div>{renderRoutes(Routes)}</div>
+      </BrowserRouter>
+    </Provider>
+  </ApolloProvider>,
   document.querySelector("#root")
 );

@@ -7,3 +7,4 @@ export {
   LOG_OUT_USER,
   logout,
 } from "./auth";
+export { UPDATE_CHAT, updateChat } from "./chat";

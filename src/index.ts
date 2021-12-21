@@ -1,6 +1,8 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express, { Request, Response } from "express";
 import { matchRoutes } from "react-router-config";
-import proxy from "http-proxy-middleware";
+import { createProxyMiddleware } from "http-proxy-middleware";
 
 import Routes from "./client/Routes";
 import createStore from "./helpers/createStore";
@@ -8,7 +10,11 @@ import renderer from "./helpers/renderer";
 
 const app = express();
 
-app.use("/api", proxy({ target: process.env.QUESTO_API_URL }));
+app.use("/api", createProxyMiddleware({ target: process.env.QUESTO_API_URL }));
+// app.use(
+//   "/ws",
+//   createProxyMiddleware({ target: process.env.QUESTO_API_WS_URL, ws: true })
+// );
 
 app.use(express.static("public"));
 
