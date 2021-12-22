@@ -12,9 +12,9 @@ import renderer from "./helpers/renderer";
 const app = express();
 
 // create reverse proxy for ws events
-const wsProxy = createProxyMiddleware(process.env.QUESTO_API_WS_URL, {
-  changeOrigin: true,
-});
+// const wsProxy = createProxyMiddleware(process.env.QUESTO_API_WS_URL, {
+//   changeOrigin: true,
+// });
 
 app.use("/api", createProxyMiddleware({ target: process.env.QUESTO_API_URL }));
 
@@ -56,4 +56,4 @@ app.get("*", (req: Request, res: Response) => {
 
 const server = app.listen(3000, () => console.log("listening on port 3000"));
 // handle websocket proxy upgrade
-server.on("upgrade", wsProxy.upgrade);
+// server.on("upgrade", wsProxy.upgrade);
