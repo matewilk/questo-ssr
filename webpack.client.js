@@ -14,10 +14,15 @@ const config = {
   },
 
   plugins: [
-  	new Dotenv({
-			path: "./.env"
-		})
-  ]
+    new Dotenv({
+      path: "./.env",
+    }),
+    new webpack.DefinePlugin({
+      "process.env.QUESTO_SSR_WS_URL": JSON.stringify(
+        process.env.QUESTO_SSR_WS_URL
+      ),
+    }),
+  ],
 };
 
 module.exports = merge(commonConfig, config);

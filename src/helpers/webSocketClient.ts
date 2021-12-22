@@ -3,7 +3,7 @@ import { WebSocketLink } from "@apollo/client/link/ws";
 import ws from "ws";
 
 export const apolloClient = (browser = false) => {
-  const WS_ENDPOINT = process.env.REACT_APP_QUESTO_SSR_WS_URL;
+  const WS_ENDPOINT = process.env.QUESTO_SSR_WS_URL;
 
   const wsLinkOptions = {
     uri: WS_ENDPOINT,
