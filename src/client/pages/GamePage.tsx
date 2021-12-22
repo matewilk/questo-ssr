@@ -32,13 +32,18 @@ const GamePage = ({ chat }: { chat: any[] }) => {
 
   useSubscription(chatSubscription, observer);
 
+  const center = {
+    display: "grid",
+    justifyItems: "center",
+  };
+
   return (
-    <>
+    <div style={center}>
       <div>Game Page</div>
       {chat.map((message, index) => (
         <div key={index}>{message}</div>
       ))}
-    </>
+    </div>
   );
 };
 

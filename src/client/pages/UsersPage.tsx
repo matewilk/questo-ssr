@@ -1,8 +1,12 @@
 import React from "react";
 
-// TODO: auth accessible pages only
+const center = {
+    display: "grid",
+    justifyItems: "center",
+};
+
 const UsersPage = () => (
-  <div>
+  <div style={center}>
     <div>I'm the users page</div>
   </div>
 );

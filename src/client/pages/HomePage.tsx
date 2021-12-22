@@ -1,25 +1,21 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
-
-import { useInput } from "../hooks/useInput";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
-  const [gameIdProps, resetGameId] = useInput("");
-  const history = useHistory();
-
-  const startGame = (e: React.MouseEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    history.push(`/game/${gameIdProps.value}`);
-    resetGameId();
+  const center = {
+    display: "grid",
+    justifyItems: "center",
   };
 
   return (
-    <div>
-      <div>Type game id</div>
-      <form onSubmit={startGame}>
-        <input {...gameIdProps} type="text" placeholder="gameId...." required />
-        <button>Start</button>
-      </form>
+    <div style={center}>
+      <div>Menu</div>
+      <div>
+        <Link to="/game">New Game</Link>
+      </div>
+      <div>
+        <Link to="/join">Join Game</Link>
+      </div>
     </div>
   );
 };

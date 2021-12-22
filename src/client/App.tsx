@@ -7,10 +7,10 @@ import { fetchCurrentUser } from "./actions";
 
 const App = ({ route }: { route: RouteConfig }) => {
   return (
-    <div>
+    <>
       <Header />
       {renderRoutes(route.routes)}
-    </div>
+    </>
   );
 };
 

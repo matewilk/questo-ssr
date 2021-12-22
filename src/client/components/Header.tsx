@@ -5,15 +5,21 @@ import { connect } from "react-redux";
 import LoginButton from "./LoginButton";
 
 const Header = ({ auth }: { auth: any }) => {
+  const absolute = {
+    position: "absolute",
+  } as React.CSSProperties;
+
   return (
-    <div>
-      <Link to="/">Questo</Link>
-      <div>
-        <Link to="/questions">Questions</Link>
+    <>
+      <Link style={absolute} to="/">
+        Questo
+      </Link>
+      <div style={{ ...absolute, right: "10px" }}>
+        {auth ? <Link to="/questions">Questions</Link> : null}
         {auth ? <Link to="/users">Users</Link> : ""}
         <LoginButton />
       </div>
-    </div>
+    </>
   );
 };
 

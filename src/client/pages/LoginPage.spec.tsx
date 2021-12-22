@@ -39,7 +39,6 @@ describe("LoginPage with Header", () => {
 
   test("displays Header as expected", () => {
     expect(screen.getByText("Questo")).toBeTruthy();
-    expect(screen.getByText("Questions")).toBeTruthy();
     expect(screen.getByText("Login")).toBeTruthy();
   });
 
