@@ -22,6 +22,8 @@ resource "kubernetes_config_map" "questo-ssr-configmap" {
 
   data = {
     QUESTO_API_URL = data.terraform_remote_state.questo-server.outputs.questo_api_url
+    QUESTO_API_WS_URL = data.terraform_remote_state.questo-server.outputs.questo_api_ws_url
+    QUESTO_SSR_WS_URL = var.env == "production" ? "wss://questo.live/api" : "wss://${var.env}.questo.live/api"
   }
 }
 
