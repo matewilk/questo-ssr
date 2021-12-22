@@ -53,7 +53,7 @@ resource "kubernetes_deployment" "questo-ssr" {
       spec {
         container {
           name  = "questo-ssr-container-${var.env}"
-          image = "matewilk/questo-ssr-image-${var.env}"
+          image = "matewilk/questo-ssr-image-${var.env}:latest"
 
           port {
             container_port = 3000
