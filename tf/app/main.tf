@@ -106,7 +106,6 @@ resource "kubernetes_ingress" "questo-ssr-ingress" {
       "alb.ingress.kubernetes.io/healthcheck-path"         = "/health"
       "alb.ingress.kubernetes.io/healthcheck-port"         = "traffic-port"
       "alb.ingress.kubernetes.io/certificate-arn"          = data.terraform_remote_state.questo-server.outputs.questo_acm_certificate_arn
-      "alb.ingress.kubernetes.io/load-balancer-attributes" = "idle_timeout.timeout_seconds=10"
     }
   }
 
