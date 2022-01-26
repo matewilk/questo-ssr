@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent, waitFor, screen } from "test-utils";
+import { renderWithProviders, fireEvent, waitFor, screen } from "test-utils";
 import { graphql } from "msw";
 import { setupServer } from "msw/node";
 
@@ -7,7 +7,7 @@ import { renderRoutes } from "react-router-config";
 // Routes is injected in 'test-utils' render method
 // which renders the App with StaticRouter
 // (see client/utils/test-utils.tsx file)
-import Routes from "../Routes";
+import Routes from "client/Routes";
 
 const mockedUser = {
   ID: "12345",
@@ -35,7 +35,7 @@ afterAll(() => server.close());
 
 describe("LoginPage with Header", () => {
   // Render Login page with Header beforeEach
-  beforeEach(() => render(<>{renderRoutes(Routes)}</>, "/login"));
+  beforeEach(() => renderWithProviders(<>{renderRoutes(Routes)}</>, "/login"));
 
   test("displays Header as expected", () => {
     expect(screen.getByText("Questo")).toBeTruthy();
