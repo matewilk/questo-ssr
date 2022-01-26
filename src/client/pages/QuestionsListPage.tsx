@@ -26,8 +26,13 @@ class QuestionsListPage extends Component<QList, {}> {
   }
 
   render() {
+    const center = {
+      display: "grid",
+      justifyItems: "center",
+    };
+
     return (
-      <div>
+      <div style={center}>
         Here is a big list of questions:
         <ul>{this.renderQuestions()}</ul>
       </div>

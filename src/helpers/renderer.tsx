@@ -7,16 +7,20 @@ import { StaticRouter } from "react-router-dom";
 import { renderRoutes } from "react-router-config";
 // prevents from xss attacks (eg. inject executable browser script tag)
 import serialize from "serialize-javascript";
+import { ApolloProvider } from "@apollo/client";
 
+import { apolloClient } from "./webSocketClient";
 import Routes from "../client/Routes";
 
 export default (req: Request, store: Store) => {
   const content = renderToString(
-    <Provider store={store}>
-      <StaticRouter location={req.path} context={{}}>
-        <div>{renderRoutes(Routes)}</div>
-      </StaticRouter>
-    </Provider>
+    <ApolloProvider client={apolloClient()}>
+      <Provider store={store}>
+        <StaticRouter location={req.path} context={{}}>
+          <div>{renderRoutes(Routes)}</div>
+        </StaticRouter>
+      </Provider>
+    </ApolloProvider>
   );
 
   return `
@@ -27,7 +31,7 @@ export default (req: Request, store: Store) => {
         <script>
           window.INITIAL_STATE = ${serialize(store.getState())}
         </script>
-        <script src="bundle.js"></script>
+        <script src="/static/bundle.js"></script>
       </body>
     </html>
   `;

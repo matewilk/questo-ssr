@@ -9,6 +9,7 @@ services:
       target: development
     environment:
       - QUESTO_API_URL=${QUESTO_API_URL}
+      - QUESTO_API_WS_URL=${QUESTO_API_WS_URL}
     volumes:
       # sync container changes while developing
       - ./src:/app/src

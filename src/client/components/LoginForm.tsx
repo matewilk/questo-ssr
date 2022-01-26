@@ -5,7 +5,7 @@ import { Dispatch } from "redux";
 import { useInput } from "../hooks/useInput";
 import { loginUser } from "../actions";
 
-const LoginForm = ({ login }: { login: Function }) => {
+export const LoginForm = ({ login }: { login: Function }) => {
   // const txtUsername = useRef();
   const [usernameProps, resetUsername] = useInput("");
   // const txtPassword = useRef();
@@ -43,7 +43,7 @@ const LoginForm = ({ login }: { login: Function }) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   login: ({ name, password }: { name: string; password: string }) => {
     // @ts-ignore
-      dispatch(loginUser({ name, password }));
+    dispatch(loginUser({ name, password }));
   },
 });
 

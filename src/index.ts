@@ -1,6 +1,9 @@
+import { config } from "dotenv";
+config();
+
 import express, { Request, Response } from "express";
 import { matchRoutes } from "react-router-config";
-import proxy from "http-proxy-middleware";
+import { createProxyMiddleware } from "http-proxy-middleware";
 
 import Routes from "./client/Routes";
 import createStore from "./helpers/createStore";
@@ -8,9 +11,16 @@ import renderer from "./helpers/renderer";
 
 const app = express();
 
-app.use("/api", proxy({ target: process.env.QUESTO_API_URL }));
+// create reverse proxy for ws events
+// const wsProxy = createProxyMiddleware(process.env.QUESTO_API_WS_URL, {
+//   changeOrigin: true,
+// });
 
-app.use(express.static("public"));
+app.use("/api", createProxyMiddleware({ target: process.env.QUESTO_API_URL }));
+
+// "/static" is needed so that React Router
+// can resolve paths with params (e.g. /xxx/:id) properly
+app.use("/static", express.static("public"));
 
 // healthcheck for k8s/eks/aws/target group
 app.get("/health", (req, res) => {
@@ -44,4 +54,6 @@ app.get("*", (req: Request, res: Response) => {
   );
 });
 
-app.listen(3000, () => console.log("listening on port 3000"));
+const server = app.listen(3000, () => console.log("listening on port 3000"));
+// handle websocket proxy upgrade
+// server.on("upgrade", wsProxy.upgrade);
