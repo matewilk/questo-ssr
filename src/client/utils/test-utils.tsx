@@ -22,11 +22,11 @@ const AllTheProviders =
     );
   };
 
-const customRender = (
+const renderWithProviders = (
   ui: ReactElement,
   path: string,
   options?: Omit<RenderOptions, "wrapper">
 ) => render(ui, { wrapper: AllTheProviders(path), ...options });
 
 export * from "@testing-library/react";
-export { customRender as render };
+export { renderWithProviders };
