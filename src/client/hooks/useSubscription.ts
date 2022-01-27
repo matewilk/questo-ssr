@@ -18,5 +18,5 @@ export function useSubscription(
     return () => {
       observable.unsubscribe();
     };
-  });
+  }, []);
 }
