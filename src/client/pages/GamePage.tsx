@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { gql, SubscriptionOptions } from "@apollo/client";
 import { useDispatch, connect } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { updateChat } from "../actions";
 import { useSubscription } from "../hooks/useSubscription";
+import { useKeyPress } from "../hooks/useKeyPress";
+import { selectLetter } from "../reducers/game";
+
+import LetterBoard from '../components/LetterBoard';
 
 const GamePage = ({ chat }: { chat: any[] }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
+  useKeyPress({callback: selectLetter});
 
   const CHAT_SUBSCRIPTION = gql`
     subscription Subscription($id: String) {
@@ -43,6 +48,7 @@ const GamePage = ({ chat }: { chat: any[] }) => {
       {chat.map((message, index) => (
         <div key={index}>{message}</div>
       ))}
+      <LetterBoard />
     </div>
   );
 };

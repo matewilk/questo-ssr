@@ -1,5 +1,5 @@
 import React from "react";
-import { renderWithProviders, fireEvent, waitFor, screen } from "test-utils";
+import { renderWithRouter, fireEvent, waitFor, screen } from "test-utils";
 import { graphql } from "msw";
 import { setupServer } from "msw/node";
 
@@ -35,7 +35,7 @@ afterAll(() => server.close());
 
 describe("LoginPage with Header", () => {
   // Render Login page with Header beforeEach
-  beforeEach(() => renderWithProviders(<>{renderRoutes(Routes)}</>, "/login"));
+  beforeEach(() => renderWithRouter(<>{renderRoutes(Routes)}</>, "/login"));
 
   test("displays Header as expected", () => {
     expect(screen.getByText("Questo")).toBeTruthy();

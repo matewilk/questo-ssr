@@ -5,7 +5,7 @@ import axios from "axios";
 
 import reducers from "../client/reducers";
 
-export default (req: Request) => {
+export default (req: Request, initialState = {}) => {
   const axiosInstance = axios.create({
     baseURL: process.env.QUESTO_API_URL,
     headers: {
@@ -18,7 +18,7 @@ export default (req: Request) => {
   });
   return createStore(
     reducers,
-    {},
+    initialState,
     applyMiddleware(thunk.withExtraArgument(axiosInstance))
   );
 };

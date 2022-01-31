@@ -1,10 +1,10 @@
 import { UPDATE_CHAT } from "../actions";
 
-export default (state: any[] = [], action: any) => {
+export default (messages: any[] = [], action: any) => {
   switch (action.type) {
     case UPDATE_CHAT:
-      return [...state, action.data];
+      return [...messages, action.message];
     default:
-      return state;
+      return messages;
   }
 };
