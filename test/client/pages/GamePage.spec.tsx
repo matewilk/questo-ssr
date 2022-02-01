@@ -1,8 +1,6 @@
 import React from "react";
 import { renderWithRouter, fireEvent, waitFor, screen } from "test-utils";
 import { renderRoutes } from "react-router-config";
-import { rest } from "msw";
-import { setupServer } from "msw/node";
 
 import Routes from "client/Routes";
 
@@ -28,7 +26,7 @@ describe("GamePage", () => {
     expect(screen.getByText("Game Page")).toBeTruthy();
   });
 
-  it("displays letter board area", () => {
-    expect(screen.getAllByTestId('letter-box')).toBeTruthy();
+  it("displays letter board area", async () => {
+    expect(await screen.queryAllByTestId('letter-box')).toBeTruthy();
   })
 });

@@ -11,7 +11,7 @@ import { ApolloProvider } from "@apollo/client";
 
 import { apolloClient } from "../helpers/webSocketClient";
 import Routes from "./Routes";
-import reducers from "./reducers";
+import reducers from "./features";
 
 // whenever using axios on the front-end
 // use it with base url set to the one blow

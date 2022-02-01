@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
 import { useInput } from "../hooks/useInput";
-import { loginUser } from "../actions";
+import { loginUser } from "../features/auth";
 
 export const LoginForm = ({ login }: { login: Function }) => {
   // const txtUsername = useRef();

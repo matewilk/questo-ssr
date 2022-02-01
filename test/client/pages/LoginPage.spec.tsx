@@ -49,19 +49,17 @@ describe("LoginPage with Header", () => {
 
   test("submits login form successfully", async () => {
     fireEvent.click(screen.getByText("Submit"));
-    await waitFor(() => screen.getByText("Logout"));
 
-    expect(screen.getByText("Logout")).toBeTruthy();
+    expect(await screen.findByText("Logout")).toBeTruthy();
   });
 
   test("displays Header properly after successful login", async () => {
     fireEvent.click(screen.getByText("Submit"));
-    await waitFor(() => screen.getByText("Logout"));
 
-    expect(screen.getByText("Questo")).toBeTruthy();
-    expect(screen.getByText("Questions")).toBeTruthy();
-    expect(screen.getByText("Users")).toBeTruthy();
-    expect(screen.getByText("Logout")).toBeTruthy();
+    expect(await screen.findByText("Questo")).toBeTruthy();
+    expect(await screen.findByText("Questions")).toBeTruthy();
+    expect(await screen.findByText("Users")).toBeTruthy();
+    expect(await screen.findByText("Logout")).toBeTruthy();
   });
 
   test("logs out user successfully", async () => {

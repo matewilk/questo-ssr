@@ -31,12 +31,6 @@ describe("LetterBox", () => {
   it("displays letter if it matches guess letter", () => {
     render(<LetterBox letter={"b"} guess={"b"}/>);
 
-    // fireEvent.keyPress(window, {
-    //   key: "b",
-    //   code: "KeyB",
-    //   charCode: 66,
-    // });
-
     expect(screen.getByText("b")).toBeDefined();
   });
 

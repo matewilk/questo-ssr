@@ -2,13 +2,13 @@ import React, { useEffect }  from "react";
 import { connect, useDispatch } from "react-redux";
 
 import LetterBox from "./LetterBox";
-import { GameState, getRandomSentence } from "../reducers/game";
+import { GameState } from "../features/game";
 
 export const LetterBoard = ({ sentence = [] }: { sentence?: string[] }) => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getRandomSentence())
-  }, [])
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(getRandomSentence())
+  // }, [])
 
   return (
     <>

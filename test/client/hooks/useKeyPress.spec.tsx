@@ -20,10 +20,17 @@ describe("useKeyPress hook", () => {
     renderWithStore(<Wrapper callback={callbackSpy} />, {});
   });
 
-  afterEach(() => jest.resetAllMocks());
+  afterEach(() => jest.restoreAllMocks());
 
   it("calls action callback when alphabet key is pressed", async () => {
     fireEvent.keyPress(window, { key: "c" });
+
+    expect(await useDispatchSpy).toHaveBeenCalled();
+    expect(await callbackSpy).toHaveBeenCalledWith("c");
+  });
+
+  it("calls action callback on case insensitive basis", async () => {
+    fireEvent.keyPress(window, { key: "C" });
 
     expect(await useDispatchSpy).toHaveBeenCalled();
     expect(await callbackSpy).toHaveBeenCalledWith("c");
@@ -34,5 +41,5 @@ describe("useKeyPress hook", () => {
 
     expect(await useDispatchSpy).toHaveBeenCalled();
     expect(await callbackSpy).not.toHaveBeenCalled();
-  })
+  });
 });

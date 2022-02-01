@@ -1,10 +1,10 @@
+import { createSlice } from "@reduxjs/toolkit";
 import { Dispatch } from "redux";
 import { AxiosInstance } from "axios";
 
-export const FETCH_CURRENT_USER = "fetch_current_user";
 export const fetchCurrentUser =
   () => async (dispatch: Dispatch, getState: Function, api: AxiosInstance) => {
-    const res = await api.post("", {
+    const result = await api.post("", {
       query: `
         query CurrentUser {
           currentUser {
@@ -16,17 +16,13 @@ export const fetchCurrentUser =
       `,
     });
 
-    dispatch({
-      type: FETCH_CURRENT_USER,
-      payload: res,
-    });
+    dispatch(currentUser(result));
   };
 
-export const LOG_IN_USER = "log_in_user";
 export const loginUser =
   (variables: { name: string; password: string }) =>
   async (dispatch: Dispatch, getState: Function, api: AxiosInstance) => {
-    const res = await api.post("", {
+    const result = await api.post("", {
       query: `
         mutation Login ($name: String!, $password: String!) {
           login(name: $name, password: $password) {
@@ -39,16 +35,12 @@ export const loginUser =
       variables,
     });
 
-    dispatch({
-      type: LOG_IN_USER,
-      payload: res,
-    });
+    dispatch(logIn(result));
   };
 
-export const LOG_OUT_USER = "log_out_user";
 export const logout =
   () => async (dispatch: Dispatch, getState: Function, api: AxiosInstance) => {
-    const res = await api.post("", {
+    const result = await api.post("", {
       query: `
         query Logout {
           logout {
@@ -58,8 +50,28 @@ export const logout =
     `,
     });
 
-    dispatch({
-      type: LOG_OUT_USER,
-      payload: res,
-    });
+    dispatch(logOut(result));
   };
+
+const initialState: object = { logged: false }
+
+export const authSlice = createSlice({
+  name: "auth",
+  initialState,
+  reducers: {
+    currentUser: (state, action) => {
+      const user = action.payload.data.data.currentUser || false;
+      return { logged: !!user, ...user }
+    },
+    logIn: (state, action) => {
+      const user = action.payload.data.data.login || false;
+      return { logged: !!user, ...user }
+    },
+    logOut: (state, action) => {
+      return { logged: !action.payload.data.data.logout.success };
+    },
+  },
+});
+
+export const { currentUser, logIn, logOut } = authSlice.actions;
+export default authSlice.reducer;

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Store } from "redux";
 
-import { fetchQuestions } from "../actions";
+import { fetchQuestions, Questions } from "../features/questions";
 
 type QList = {
   questions: any;
@@ -20,7 +20,7 @@ class QuestionsListPage extends Component<QList, {}> {
   }
 
   renderQuestions() {
-    return this.props.questions.map((question: any, i: number) => {
+    return this.props.questions.edges.map((question: any, i: number) => {
       return <li key={i}>{question.text}</li>;
     });
   }
@@ -40,14 +40,18 @@ class QuestionsListPage extends Component<QList, {}> {
   }
 }
 
-function mapStateToProps(state: any) {
-  return { questions: state.questions };
+function mapStateToProps({
+  questions,
+}: {
+  questions: { questions: Questions };
+}) {
+  return { questions: questions.questions };
 }
 
 const loadData = (store: Store) => {
   // store is used here because there
   // is no access to connect (Provider) yet
-  // as tue app is not rendered at this point
+  // as the app is not rendered at this point
   //
   // also each component feeds the store
   // with its own data so after all the

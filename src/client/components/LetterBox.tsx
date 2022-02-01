@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
-import { GameState } from "../reducers/game";
+import { GameState } from "../features/game";
 
 export const LetterBox = ({
   letter,

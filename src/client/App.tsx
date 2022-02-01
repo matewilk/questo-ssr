@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { renderRoutes, RouteConfig } from "react-router-config";
 
 import Header from "./components/Header";
-import { fetchCurrentUser } from "./actions";
+import { fetchCurrentUser } from "./features/auth";
 
 const App = ({ route }: { route: RouteConfig }) => {
   return (
