@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import { gql, SubscriptionOptions } from "@apollo/client";
 import { useDispatch, connect } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { updateChat } from "../features/chat";
 import { useSubscription } from "../hooks/useSubscription";
 import { useKeyPress } from "../hooks/useKeyPress";
-import { getRandomSentence, selectLetter } from "../features/game";
+import { GameState, getRandomSentence, selectLetter } from "../features/game";
 
 import LetterBoard from "../components/LetterBoard";
 import { Store } from "redux";
@@ -54,8 +54,8 @@ const GamePage = ({ chat, sentence }: { chat: any[]; sentence: string[] }) => {
   );
 };
 
-function mapStateToProps(state: any) {
-  return { chat: state.chat, sentence: state.game.sentence };
+function mapStateToProps({ chat, game }: { chat: any; game: GameState }) {
+  return { chat: chat, sentence: game.sentence };
 }
 
 const loadData = (store: Store) => {

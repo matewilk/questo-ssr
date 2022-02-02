@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Dispatch } from "react";
+import { Dispatch } from "redux";
 import { AxiosInstance } from "axios";
 
 // const getRandomSentence = createAsyncThunk(
@@ -19,12 +19,19 @@ const getRandomSentence =
     dispatch(printSentence(result.data));
   };
 
+const generateGameId = () => (dispatch: Dispatch) => {
+  const newGameId = Math.random().toString(36).substring(2, 7);
+  dispatch(assignGameId(newGameId));
+};
+
 export interface GameState {
+  id: string;
   sentence: string[];
   letter: string;
 }
 
 const initialState: GameState = {
+  id: "",
   sentence: [],
   letter: "",
 };
@@ -33,6 +40,9 @@ export const gameSlice = createSlice({
   name: "game",
   initialState,
   reducers: {
+    assignGameId: (state, action) => {
+      state.id = action.payload;
+    },
     selectLetter: (state, action: PayloadAction<any>) => {
       state.letter = action.payload;
     },
@@ -47,6 +57,6 @@ export const gameSlice = createSlice({
   // },
 });
 
-export const { selectLetter, printSentence } = gameSlice.actions;
-export { getRandomSentence };
+export const { selectLetter, printSentence, assignGameId } = gameSlice.actions;
+export { getRandomSentence, generateGameId };
 export default gameSlice.reducer;

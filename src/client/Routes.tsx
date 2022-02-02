@@ -22,11 +22,11 @@ export default [
       {
         path: "/game/:id",
         ...GamePage,
-        exact: false
+        exact: false,
       },
       {
         path: "/join",
-        ...JoinGamePage
+        ...JoinGamePage,
       },
       {
         path: "/questions",

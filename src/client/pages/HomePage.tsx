@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
+import { Dispatch } from "redux";
+import { connect } from "react-redux";
 
-const HomePage = () => {
-  const [gameId, setGameId] = useState("");
+import { GameState, generateGameId } from "../features/game";
 
-  useEffect(() => {
-    const newId = Math.random().toString(36).substring(2, 7);
-    setGameId(newId);
-  }, []);
-
+const HomePage = ({ gameId }: { gameId: string }) => {
   const center = {
     display: "grid",
     justifyItems: "center",
@@ -27,6 +24,13 @@ const HomePage = () => {
   );
 };
 
+const mapStateToProps = ({ game }: { game: GameState }) => ({
+  gameId: game.id,
+});
+
 export default {
-  component: HomePage,
+  loadData: ({ dispatch }: { dispatch: Dispatch }) => {
+    return dispatch<any>(generateGameId());
+  },
+  component: connect(mapStateToProps)(HomePage),
 };

@@ -1,5 +1,12 @@
 import React from "react";
-import { renderWithRouter, fireEvent, waitFor, screen } from "test-utils";
+import {
+  renderWithRouter,
+  fireEvent,
+  waitFor,
+  screen,
+  loadBackendDataToStore,
+  cleanup
+} from "test-utils";
 import { graphql } from "msw";
 import { setupServer } from "msw/node";
 
@@ -33,11 +40,27 @@ beforeEach(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
+const renderPage = async () => {
+  const path = "/login";
+  const store = await loadBackendDataToStore(path);
+  renderWithRouter(<>{renderRoutes(Routes)}</>, path, store);
+}
+
 describe("LoginPage with Header", () => {
   // Render Login page with Header beforeEach
-  beforeEach(() => renderWithRouter(<>{renderRoutes(Routes)}</>, "/login"));
+  beforeEach(async () => {
+    await renderPage();
+  });
 
-  test("displays Header as expected", () => {
+  test("displays Header as expected", async () => {
+    server.use(
+      graphql.query("CurrentUser", (req, res, ctx) =>
+        res(ctx.data({ currentUser: null }))
+      )
+    );
+    cleanup();
+    await renderPage();
+
     expect(screen.getByText("Questo")).toBeTruthy();
     expect(screen.getByText("Login")).toBeTruthy();
   });
