@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { logout } from "../actions";
+import { logout } from "../features/auth"
 
 const LoginButton = ({
   auth,
@@ -29,7 +29,7 @@ const LoginButton = ({
 };
 
 function mapStateToProps({ auth }: { auth: any }) {
-  return { auth };
+  return { auth: auth.logged };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

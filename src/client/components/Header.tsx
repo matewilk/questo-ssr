@@ -24,7 +24,7 @@ const Header = ({ auth }: { auth: any }) => {
 };
 
 function mapStateToProps({ auth }: { auth: any }) {
-  return { auth };
+  return { auth: auth.logged };
 }
 
 export default connect(mapStateToProps)(Header);

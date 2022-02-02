@@ -1,5 +1,12 @@
 import React from "react";
-import { renderWithProviders, fireEvent, waitFor, screen } from "test-utils";
+import {
+  renderWithRouter,
+  fireEvent,
+  waitFor,
+  screen,
+  loadBackendDataToStore,
+  cleanup
+} from "test-utils";
 import { graphql } from "msw";
 import { setupServer } from "msw/node";
 
@@ -33,11 +40,27 @@ beforeEach(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
+const renderPage = async () => {
+  const path = "/login";
+  const store = await loadBackendDataToStore(path);
+  renderWithRouter(<>{renderRoutes(Routes)}</>, path, store);
+}
+
 describe("LoginPage with Header", () => {
   // Render Login page with Header beforeEach
-  beforeEach(() => renderWithProviders(<>{renderRoutes(Routes)}</>, "/login"));
+  beforeEach(async () => {
+    await renderPage();
+  });
 
-  test("displays Header as expected", () => {
+  test("displays Header as expected", async () => {
+    server.use(
+      graphql.query("CurrentUser", (req, res, ctx) =>
+        res(ctx.data({ currentUser: null }))
+      )
+    );
+    cleanup();
+    await renderPage();
+
     expect(screen.getByText("Questo")).toBeTruthy();
     expect(screen.getByText("Login")).toBeTruthy();
   });
@@ -49,19 +72,17 @@ describe("LoginPage with Header", () => {
 
   test("submits login form successfully", async () => {
     fireEvent.click(screen.getByText("Submit"));
-    await waitFor(() => screen.getByText("Logout"));
 
-    expect(screen.getByText("Logout")).toBeTruthy();
+    expect(await screen.findByText("Logout")).toBeTruthy();
   });
 
   test("displays Header properly after successful login", async () => {
     fireEvent.click(screen.getByText("Submit"));
-    await waitFor(() => screen.getByText("Logout"));
 
-    expect(screen.getByText("Questo")).toBeTruthy();
-    expect(screen.getByText("Questions")).toBeTruthy();
-    expect(screen.getByText("Users")).toBeTruthy();
-    expect(screen.getByText("Logout")).toBeTruthy();
+    expect(await screen.findByText("Questo")).toBeTruthy();
+    expect(await screen.findByText("Questions")).toBeTruthy();
+    expect(await screen.findByText("Users")).toBeTruthy();
+    expect(await screen.findByText("Logout")).toBeTruthy();
   });
 
   test("logs out user successfully", async () => {

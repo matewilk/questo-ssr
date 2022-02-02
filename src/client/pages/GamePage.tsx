@@ -3,12 +3,18 @@ import { gql, SubscriptionOptions } from "@apollo/client";
 import { useDispatch, connect } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { updateChat } from "../actions";
+import { updateChat } from "../features/chat";
 import { useSubscription } from "../hooks/useSubscription";
+import { useKeyPress } from "../hooks/useKeyPress";
+import { GameState, getRandomSentence, selectLetter } from "../features/game";
 
-const GamePage = ({ chat }: { chat: any[] }) => {
+import LetterBoard from "../components/LetterBoard";
+import { Store } from "redux";
+
+const GamePage = ({ chat, sentence }: { chat: any[]; sentence: string[] }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
+  useKeyPress({ callback: selectLetter });
 
   const CHAT_SUBSCRIPTION = gql`
     subscription Subscription($id: String) {
@@ -43,14 +49,19 @@ const GamePage = ({ chat }: { chat: any[] }) => {
       {chat.map((message, index) => (
         <div key={index}>{message}</div>
       ))}
+      <LetterBoard />
     </div>
   );
 };
 
-function mapStateToProps(state: any) {
-  return { chat: state.chat };
+function mapStateToProps({ chat, game }: { chat: any; game: GameState }) {
+  return { chat: chat, sentence: game.sentence };
 }
 
+const loadData = (store: Store) => {
+  return store.dispatch<any>(getRandomSentence());
+};
 export default {
+  loadData,
   component: connect(mapStateToProps, null)(GamePage),
 };
