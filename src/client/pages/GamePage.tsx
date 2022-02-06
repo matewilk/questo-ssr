@@ -1,42 +1,21 @@
 import React from "react";
-import { gql, SubscriptionOptions } from "@apollo/client";
-import { useDispatch, connect } from "react-redux";
+import { Store } from "redux";
+import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { updateChat } from "../features/chat";
-import { useSubscription } from "../hooks/useSubscription";
 import { useKeyPress } from "../hooks/useKeyPress";
-import { GameState, getRandomSentence, selectLetter } from "../features/game";
+import { useChatSubscription } from "../hooks/useChatSubscription";
+import { useGameSubscription } from "../hooks/useGameSubscription";
+import { getRandomSentence } from "../features/game";
 
 import LetterBoard from "../components/LetterBoard";
-import { Store } from "redux";
 
-const GamePage = ({ chat, sentence }: { chat: any[]; sentence: string[] }) => {
-  const dispatch = useDispatch();
+const GamePage = ({ chat }: { chat: any[] }) => {
   const { id } = useParams();
-  useKeyPress({ callback: selectLetter });
 
-  const CHAT_SUBSCRIPTION = gql`
-    subscription Subscription($id: String) {
-      chat(id: $id) {
-        message
-      }
-    }
-  `;
-
-  const chatSubscription: SubscriptionOptions = {
-    query: CHAT_SUBSCRIPTION,
-    variables: { id: id },
-  };
-
-  const observer = {
-    next({ data }: { data: any }) {
-      const message = data.chat.message;
-      dispatch(updateChat(message));
-    },
-  };
-
-  useSubscription(chatSubscription, observer);
+  useKeyPress({ id });
+  useChatSubscription({ id });
+  useGameSubscription({ id });
 
   const center = {
     display: "grid",
@@ -54,8 +33,8 @@ const GamePage = ({ chat, sentence }: { chat: any[]; sentence: string[] }) => {
   );
 };
 
-function mapStateToProps({ chat, game }: { chat: any; game: GameState }) {
-  return { chat: chat, sentence: game.sentence };
+function mapStateToProps({ chat }: { chat: any }) {
+  return { chat: chat };
 }
 
 const loadData = (store: Store) => {
