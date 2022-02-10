@@ -18,9 +18,12 @@ const GamePage = ({ chat }: { chat: any[] }) => {
   useGameSubscription({ id });
 
   const center = {
-    display: "grid",
+    display: "flex",
+    flexDirection: "column",
     justifyItems: "center",
-  };
+    alignItems: "center",
+    height: "100%",
+  } as React.CSSProperties;
 
   return (
     <div style={center}>

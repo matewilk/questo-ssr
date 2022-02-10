@@ -5,8 +5,10 @@ import LetterBox from "./LetterBox";
 import { GameState } from "../features/game";
 
 const style = {
+  height: "100%",
   display: "flex",
-  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "center",
   gap: "3em",
 };
 
