@@ -58,6 +58,7 @@ export const LetterBox = ({
       {transitions(({ opacity }, letter) => {
         return (
           <a.div
+            data-testid="letter-box"
             style={{
               ...cardStyle,
               transform: transform,
