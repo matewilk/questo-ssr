@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { useSpring, a } from "react-spring";
+import { useSpring, useTransition, a } from "react-spring";
 
 import { GameState } from "../features/game";
 
@@ -22,6 +22,9 @@ const cardStyle = {
   fontSize: "24px",
 } as React.CSSProperties;
 
+const hide = { opacity: 0 };
+const show = { opacity: 1 };
+
 export const LetterBox = ({
   letter,
   guess,
@@ -38,6 +41,16 @@ export const LetterBox = ({
     config: { mass: 5, tension: 500, friction: 80 },
   });
 
+  const transitions = useTransition(displayedLetter, {
+    from: hide,
+    enter: show,
+    leave: hide,
+    opacity: flipped ? 1 : 0,
+    // transform: `perspective(100px) rotateX(${flipped ? 180 : 0}deg)`,
+    config: { mass: 5, tension: 500, friction: 80 },
+    // onRest: () => setItems([]),
+  });
+
   useEffect(() => {
     if (letter && guess && letter.toLowerCase() === guess.toLowerCase()) {
       setDisplayedLetter(letter);
@@ -46,7 +59,7 @@ export const LetterBox = ({
 
   return (
     <div style={boxStyle as React.CSSProperties}>
-      <a.div
+      {/* <a.div
         style={{
           ...cardStyle,
           opacity: opacity.to((o) => 1 - o),
@@ -64,7 +77,25 @@ export const LetterBox = ({
         data-testid="letter-box"
       >
         {displayedLetter}
-      </a.div>
+      </a.div> */}
+      {transitions(({ opacity }, letter) => {
+        console.log(letter);
+        return (
+          <a.div
+            style={{
+              ...cardStyle,
+              transform: transform,
+              opacity: opacity.to({
+                range: [0, 0.5, 1],
+                output: [0, 0, 1],
+              }),
+              rotateX: "180deg",
+            }}
+          >
+            {letter}
+          </a.div>
+        );
+      })}
     </div>
   );
 };
