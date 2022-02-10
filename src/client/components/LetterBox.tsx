@@ -5,8 +5,8 @@ import { useSpring, useTransition, a } from "react-spring";
 import { GameState } from "../features/game";
 
 const boxStyle = {
-  width: "3em",
-  height: "3em",
+  width: "2em",
+  height: "2em",
 };
 
 const cardStyle = {
@@ -14,12 +14,12 @@ const cardStyle = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  width: "3em",
-  height: "3em",
+  width: "2em",
+  height: "2em",
   border: "1px solid black",
   borderRadius: "0.2em",
   willChange: "transform, opacity",
-  fontSize: "24px",
+  fontSize: "36px",
 } as React.CSSProperties;
 
 const hide = { opacity: 0 };
@@ -35,9 +35,8 @@ export const LetterBox = ({
   const [displayedLetter, setDisplayedLetter] = useState("");
   // @ts-ignore
   const flipped = displayedLetter.length == true;
-  const { transform, opacity } = useSpring({
-    opacity: flipped ? 1 : 0,
-    transform: `perspective(100px) rotateX(${flipped ? 180 : 0}deg)`,
+  const { transform } = useSpring({
+    transform: `perspective(500px) rotateX(${flipped ? 180 : 0}deg)`,
     config: { mass: 5, tension: 500, friction: 80 },
   });
 
@@ -45,10 +44,7 @@ export const LetterBox = ({
     from: hide,
     enter: show,
     leave: hide,
-    opacity: flipped ? 1 : 0,
-    // transform: `perspective(100px) rotateX(${flipped ? 180 : 0}deg)`,
     config: { mass: 5, tension: 500, friction: 80 },
-    // onRest: () => setItems([]),
   });
 
   useEffect(() => {
@@ -59,27 +55,7 @@ export const LetterBox = ({
 
   return (
     <div style={boxStyle as React.CSSProperties}>
-      {/* <a.div
-        style={{
-          ...cardStyle,
-          opacity: opacity.to((o) => 1 - o),
-          transform,
-        }}
-        data-testid="letter-box"
-      />
-      <a.div
-        style={{
-          ...cardStyle,
-          opacity,
-          transform,
-          rotateX: "180deg",
-        }}
-        data-testid="letter-box"
-      >
-        {displayedLetter}
-      </a.div> */}
       {transitions(({ opacity }, letter) => {
-        console.log(letter);
         return (
           <a.div
             style={{
