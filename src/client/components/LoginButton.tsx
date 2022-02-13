@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { logout } from "../features/auth"
+import { logout } from "../features/auth";
 
 const LoginButton = ({
   auth,

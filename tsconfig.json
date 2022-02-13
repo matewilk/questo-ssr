@@ -16,7 +16,5 @@
       "test-utils": ["./client/utils/test-utils"]
     }
   },
-  "include": [
-    "./src/**/*"
-  ]
+  "include": ["./src/**/*"]
 }

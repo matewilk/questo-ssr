@@ -153,7 +153,7 @@ workflows:
     when:
       and:
         - not:
-            equal: [ master, << pipeline.git.branch >> ]
+            equal: [master, << pipeline.git.branch >>]
     jobs:
       - build
       - test:

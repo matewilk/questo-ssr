@@ -53,7 +53,7 @@ export const logout =
     dispatch(logOut(result));
   };
 
-const initialState: object = { logged: false }
+const initialState: object = { logged: false };
 
 export const authSlice = createSlice({
   name: "auth",
@@ -61,11 +61,11 @@ export const authSlice = createSlice({
   reducers: {
     currentUser: (state, action) => {
       const user = action.payload.data.data.currentUser || false;
-      return { logged: !!user, ...user }
+      return { logged: !!user, ...user };
     },
     logIn: (state, action) => {
       const user = action.payload.data.data.login || false;
-      return { logged: !!user, ...user }
+      return { logged: !!user, ...user };
     },
     logOut: (state, action) => {
       return { logged: !action.payload.data.data.logout.success };

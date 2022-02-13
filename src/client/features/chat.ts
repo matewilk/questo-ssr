@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: string[] = [];
 
@@ -8,9 +8,9 @@ export const chatSlice = createSlice({
   reducers: {
     updateChat: (state, action) => {
       state.push(action.payload);
-    }
-  }
-})
+    },
+  },
+});
 
 export const { updateChat } = chatSlice.actions;
-export default chatSlice.reducer
+export default chatSlice.reducer;

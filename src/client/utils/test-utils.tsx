@@ -14,7 +14,7 @@ const loadBackendDataToStore = async (path: string): Promise<Store> => {
   const promises = matchRoutes(Routes, path).map(({ route }) => {
     return route.loadData ? route.loadData(store) : null;
   });
-  await Promise.all(promises)
+  await Promise.all(promises);
   return store;
 };
 

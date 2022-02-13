@@ -13,7 +13,7 @@ describe("LetterBox", () => {
 
   it("displays empty div", () => {
     // @ts-ignore
-    expect(wrapper.container.firstChild.innerHTML).toEqual("");
+    expect(wrapper.container.firstChild.firstChild.innerHTML).toEqual("");
   });
 
   it("does not display passed letter prop", () => {
@@ -22,21 +22,21 @@ describe("LetterBox", () => {
     expect(screen.queryByText("a")).toBeNull();
   });
 
-  it('does not display letter if it does not match guess letter', () => {
-    render(<LetterBox letter={"a"} guess={"b"} />)
+  it("does not display letter if it does not match guess letter", () => {
+    render(<LetterBox letter={"a"} guess={"b"} />);
 
     expect(screen.queryByText("a")).toBeNull();
-  })
+  });
 
   it("displays letter if it matches guess letter", () => {
-    render(<LetterBox letter={"b"} guess={"b"}/>);
+    render(<LetterBox letter={"b"} guess={"b"} />);
 
     expect(screen.getByText("b")).toBeDefined();
   });
 
   it("displays letter case insensitive when they match", () => {
-    render(<LetterBox letter={"B"} guess={"b"}/>);
+    render(<LetterBox letter={"B"} guess={"b"} />);
 
     expect(screen.getByText("B")).toBeDefined();
-  })
+  });
 });

@@ -29,7 +29,7 @@ const sendKeyPress =
         }
       `,
       variables,
-    })
+    });
   };
 
 export interface GameState {
@@ -60,7 +60,6 @@ export const gameSlice = createSlice({
   },
 });
 
-export const { assignGameId, updateGame, printSentence } =
-  gameSlice.actions;
+export const { assignGameId, updateGame, printSentence } = gameSlice.actions;
 export { getRandomSentence, generateGameId, sendKeyPress };
 export default gameSlice.reducer;

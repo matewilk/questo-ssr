@@ -1,21 +1,24 @@
-import React, { useEffect }  from "react";
-import { connect, useDispatch } from "react-redux";
+import React from "react";
+import { connect } from "react-redux";
 
 import LetterBox from "./LetterBox";
 import { GameState } from "../features/game";
 
-export const LetterBoard = ({ sentence = [] }: { sentence?: string[] }) => {
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(getRandomSentence())
-  // }, [])
+const style = {
+  height: "100%",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: "6rem",
+};
 
+export const LetterBoard = ({ sentence = [] }: { sentence?: string[] }) => {
   return (
-    <>
+    <div style={style as React.CSSProperties}>
       {sentence.map((letter: string, index: number) => (
         <LetterBox key={`${letter}-${index}`} letter={letter} />
       ))}
-    </>
+    </div>
   );
 };
 

@@ -1,8 +1,8 @@
 import React from "react";
 
 const center = {
-    display: "grid",
-    justifyItems: "center",
+  display: "grid",
+  justifyItems: "center",
 };
 
 const UsersPage = () => (

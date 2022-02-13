@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Store } from "redux";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { useKeyPress } from "../hooks/useKeyPress";
@@ -11,16 +11,23 @@ import { getRandomSentence } from "../features/game";
 import LetterBoard from "../components/LetterBoard";
 
 const GamePage = ({ chat }: { chat: any[] }) => {
-  const { id } = useParams();
-
+  const { id }: { id: string } = useParams();
   useKeyPress({ id });
   useChatSubscription({ id });
   useGameSubscription({ id });
 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getRandomSentence());
+  }, []);
+
   const center = {
-    display: "grid",
+    display: "flex",
+    flexDirection: "column",
     justifyItems: "center",
-  };
+    alignItems: "center",
+    height: "100%",
+  } as React.CSSProperties;
 
   return (
     <div style={center}>

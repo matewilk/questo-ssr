@@ -64,5 +64,5 @@ export const questionsSlice = createSlice({
 });
 
 export const { reduceQuestions } = questionsSlice.actions;
-export { fetchQuestions }
+export { fetchQuestions };
 export default questionsSlice.reducer;
