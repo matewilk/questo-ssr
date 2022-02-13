@@ -5,7 +5,7 @@ import {
   waitFor,
   screen,
   loadBackendDataToStore,
-  cleanup
+  cleanup,
 } from "test-utils";
 import { graphql } from "msw";
 import { setupServer } from "msw/node";
@@ -44,7 +44,7 @@ const renderPage = async () => {
   const path = "/login";
   const store = await loadBackendDataToStore(path);
   renderWithRouter(<>{renderRoutes(Routes)}</>, path, store);
-}
+};
 
 describe("LoginPage with Header", () => {
   // Render Login page with Header beforeEach

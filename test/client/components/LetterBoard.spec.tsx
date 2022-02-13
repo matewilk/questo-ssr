@@ -7,12 +7,10 @@ describe("LetterBoard", () => {
   let sentence;
   beforeEach(() => {
     sentence = ["t", "e", "s", "t"];
-    renderWithStore(<LetterBoard />, { game: { sentence }});
+    renderWithStore(<LetterBoard />, { game: { sentence } });
   });
 
   it("displays blank LetterBoxes for each char in sentence", () => {
-    expect(screen.getAllByTestId('letter-box').length).toEqual(
-      sentence.length
-    );
+    expect(screen.getAllByTestId("letter-box").length).toEqual(sentence.length);
   });
 });
