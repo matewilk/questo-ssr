@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Store } from "redux";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { useKeyPress } from "../hooks/useKeyPress";
@@ -12,10 +12,14 @@ import LetterBoard from "../components/LetterBoard";
 
 const GamePage = ({ chat }: { chat: any[] }) => {
   const { id }: { id: string } = useParams();
-
   useKeyPress({ id });
   useChatSubscription({ id });
   useGameSubscription({ id });
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getRandomSentence());
+  }, []);
 
   const center = {
     display: "flex",

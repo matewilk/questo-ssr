@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Dispatch } from "redux";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 
 import { GameState, generateGameId } from "../features/game";
 
 const HomePage = ({ gameId }: { gameId: string }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(generateGameId());
+  }, []);
+
   const center = {
     display: "grid",
     justifyItems: "center",
