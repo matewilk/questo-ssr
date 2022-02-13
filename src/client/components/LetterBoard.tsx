@@ -9,7 +9,7 @@ const style = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  gap: "3em",
+  gap: "6rem",
 };
 
 export const LetterBoard = ({ sentence = [] }: { sentence?: string[] }) => {

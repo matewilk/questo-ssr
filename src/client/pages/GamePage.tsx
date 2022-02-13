@@ -11,7 +11,7 @@ import { getRandomSentence } from "../features/game";
 import LetterBoard from "../components/LetterBoard";
 
 const GamePage = ({ chat }: { chat: any[] }) => {
-  const { id } = useParams();
+  const { id }: { id: string } = useParams();
 
   useKeyPress({ id });
   useChatSubscription({ id });

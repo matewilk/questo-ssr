@@ -4,18 +4,13 @@ import { useSpring, useTransition, a } from "react-spring";
 
 import { GameState } from "../features/game";
 
-const boxStyle = {
-  width: "2em",
-  height: "2em",
-};
-
 const cardStyle = {
   position: "absolute",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  width: "2em",
-  height: "2em",
+  width: "5rem",
+  height: "5rem",
   border: "1px solid black",
   borderRadius: "0.2em",
   willChange: "transform, opacity",
@@ -35,11 +30,11 @@ export const LetterBox = ({
   const [displayedLetter, setDisplayedLetter] = useState("");
   // @ts-ignore
   const flipped = displayedLetter.length == true;
+
   const { transform } = useSpring({
     transform: `perspective(500px) rotateX(${flipped ? 180 : 0}deg)`,
     config: { mass: 5, tension: 500, friction: 80 },
   });
-
   const transitions = useTransition(displayedLetter, {
     from: hide,
     enter: show,
@@ -54,7 +49,9 @@ export const LetterBox = ({
   }, [letter, guess]);
 
   return (
-    <div style={boxStyle as React.CSSProperties}>
+    // need this div to have inner div position:absolute
+    // to animate it properly
+    <div>
       {transitions(({ opacity }, letter) => {
         return (
           <a.div
